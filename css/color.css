@@ -1,0 +1,40 @@
+body {
+  --primary: #ae9353;
+  --dark-primary: #937e4d;
+  --color: #381a2a;
+  --bg: #f5efd3;
+}
+
+/* body.dark {
+  --primary: #ae9353;
+  --dark-primary: #937e4d;
+  --bg: #381a2a;
+  --color: #f5efd3;
+} */
+
+body,
+.modal-content {
+  background-color: var(--bg);
+  color: var(--color);
+}
+
+.primary,
+.btn-outline-primary:hover {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.primary:hover {
+  background-color: var(--dark-primary) !important;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--dark-primary);
+  border: 1px solid var(--dark-primary) !important;
+}
+
+.bg-dark {
+  background-color: var(--color) !important;
+  color: var(--bg) !important;
+}
