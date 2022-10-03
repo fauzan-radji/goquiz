@@ -34,6 +34,11 @@ body,
   border: 1px solid var(--dark-primary) !important;
 }
 
+.dark-primary {
+  background-color: var(--dark-primary);
+  color: var(--bg) !important;
+}
+
 .bg-dark {
   background-color: var(--color) !important;
   color: var(--bg) !important;

@@ -1,0 +1,38 @@
+.navbar-nama {
+  padding-top: var(--bs-navbar-brand-padding-y);
+  padding-bottom: var(--bs-navbar-brand-padding-y);
+  margin-right: var(--bs-navbar-brand-margin-end);
+  font-size: 1.4em;
+  color: var(--bg);
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  white-space: nowrap;
+}
+
+.navbar-nama:hover {
+  color: var(--bg);
+}
+
+.navbar-nama > img {
+  width: 2em;
+  height: 2em;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  width: 200px;
+}
+
+.dropdown-item {
+  color: var(--color);
+}
+
+.exp {
+  background-color: var(--primary);
+  padding: 0.4em 0.8em;
+  border-radius: 1em;
+  border: 2px solid var(--bg);
+}
