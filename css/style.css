@@ -13,10 +13,12 @@ body {
 
 header {
   text-align: center;
-  font-size: 5em;
   font-weight: bold;
   margin: 50px;
-  letter-spacing: -0.05em;
+}
+
+header img {
+  height: 5em;
 }
 
 main {
@@ -28,15 +30,15 @@ main {
   padding: 0 30px;
 }
 
-img {
+main img {
   width: 50vw;
   height: 50vw;
   max-width: 300px;
   max-height: 300px;
 
-  object-fit: cover;
-  border-radius: 50%;
-  background-color: #ae9353;
+  object-fit: contain;
+  /* border-radius: 50%; */
+  /* background-color: #ae9353; */
   margin: 0 80px;
 }
 
