@@ -145,15 +145,14 @@ while($row = mysqli_fetch_assoc($result)) {
           <div class="mb-3">
             <p class="form-label">Foto Profil</p>
             <div class="d-flex justify-content-center">
-
               <input type="radio" name="pict" id="asd" style="display: none;" checked>
-              <label for="asd"><img width="100" class="rounded-circle profile-pict" src="img/profile-pict/asd.svg"></label>
+              <label for="asd"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/asd.svg"></label>
               <input type="radio" name="pict" id="jkl" style="display: none;">
-              <label for="jkl"><img width="100" class="rounded-circle profile-pict" src="img/profile-pict/jkl.svg"></label>
+              <label for="jkl"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/jkl.svg"></label>
               <input type="radio" name="pict" id="ghj" style="display: none;">
-              <label for="ghj"><img width="100" class="rounded-circle profile-pict" src="img/profile-pict/ghj.svg"></label>
+              <label for="ghj"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/ghj.svg"></label>
               <input type="radio" name="pict" id="klm" style="display: none;">
-              <label for="klm"><img width="100" class="rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
+              <label for="klm"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
             </div>
           </div>
         </div>

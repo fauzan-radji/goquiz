@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2022 at 05:55 PM
+-- Generation Time: Oct 03, 2022 at 11:53 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `point` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`id`, `id_user`, `point`) VALUES
+(1, 2, 8),
+(2, 2, 5),
+(3, 2, 10),
+(4, 2, 5),
+(5, 2, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `profile`
 --
 
@@ -32,11 +55,19 @@ CREATE TABLE `profile` (
   `nama` varchar(40) NOT NULL,
   `jenis_kelamin` varchar(10) NOT NULL,
   `role` varchar(10) NOT NULL,
-  `exp` int(50) NOT NULL,
+  `kyu` int(50) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` char(10) NOT NULL,
   `profile` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `profile`
+--
+
+INSERT INTO `profile` (`id_profile`, `nama`, `jenis_kelamin`, `role`, `kyu`, `username`, `password`, `profile`) VALUES
+(2, 'fauzan', '', '', 0, 'fauzan', '12345', ''),
+(3, 'fauzan', '', '', 0, 'fauzan', '456', '');
 
 -- --------------------------------------------------------
 
@@ -71,6 +102,12 @@ INSERT INTO `question` (`id_question`, `question`, `answer_a`, `answer_b`, `answ
 --
 
 --
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `profile`
 --
 ALTER TABLE `profile`
@@ -87,10 +124,16 @@ ALTER TABLE `question`
 --
 
 --
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `question`
