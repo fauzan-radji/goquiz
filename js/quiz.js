@@ -155,6 +155,7 @@ function sendAnswer(answerjson) {
   const answerArea = document.createElement("textarea");
   answerArea.name = "answer";
   answerArea.value = answerjson;
+  form.appendChild(answerArea);
 
   document.body.appendChild(form);
   form.submit();
