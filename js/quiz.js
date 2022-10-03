@@ -1,72 +1,3 @@
-const questions = [
-  {
-    id: 0,
-    question: "Siapakah nama Anda?",
-    choices: [
-      {
-        id: "a",
-        content: "Boruto",
-      },
-      {
-        id: "b",
-        content: "Naruto",
-      },
-      {
-        id: "c",
-        content: "Hinata",
-      },
-      {
-        id: "d",
-        content: "Himawari",
-      },
-    ],
-  },
-  {
-    id: 1,
-    question: "Siapakah Bapak Anda?",
-    choices: [
-      {
-        id: "a",
-        content: "Asep",
-      },
-      {
-        id: "b",
-        content: "Jamet",
-      },
-      {
-        id: "c",
-        content: "Melek",
-      },
-      {
-        id: "d",
-        content: "Kausu",
-      },
-    ],
-  },
-  {
-    id: 2,
-    question: "Siapakah Mama Anda?",
-    choices: [
-      {
-        id: "a",
-        content: "Bapak Anda",
-      },
-      {
-        id: "b",
-        content: "Kakak Anda",
-      },
-      {
-        id: "c",
-        content: "Nenek Anda",
-      },
-      {
-        id: "d",
-        content: "Mamak Anda",
-      },
-    ],
-  },
-];
-
 const questionCount = questions.length;
 
 const question = document.getElementById("question");
@@ -99,6 +30,13 @@ buttonLanjut.addEventListener("click", () => {
     return;
   }
 
+  savedQuestion.push({
+    questionId: lastQuestion.id,
+    answer: choiceElements.find((e) => e.checked).value,
+  });
+
+  updateProgress();
+
   // tinggal satu pertanyaan kah?
   if (questions.length === 1) {
     buttonLanjut.textContent = "SELESAI";
@@ -112,13 +50,7 @@ buttonLanjut.addEventListener("click", () => {
     }, 600);
   }
 
-  savedQuestion.push({
-    questionId: lastQuestion.id,
-    answer: choiceElements.find((e) => e.checked).value,
-  });
-
   resetChoice();
-  updateProgress();
   updateQuestion();
 });
 
@@ -149,7 +81,7 @@ function updateProgress() {
 
 function sendAnswer(answerjson) {
   const form = document.createElement("form");
-  form.action = "result.html";
+  form.action = "result.php";
   form.method = "post";
   form.style.display = "none";
   const answerArea = document.createElement("textarea");
@@ -158,5 +90,6 @@ function sendAnswer(answerjson) {
   form.appendChild(answerArea);
 
   document.body.appendChild(form);
+
   form.submit();
 }

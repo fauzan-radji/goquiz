@@ -1,3 +1,23 @@
+<?php
+session_start();
+// Jika belum login
+if(!isset($_SESSION['username'])) {
+  echo "<script>alert('Anda tidak berwenang mengakses halaman ini!');window.location.href='login.php'</script>";
+  die;
+}
+
+include('koneksi.php');
+$result = mysqli_query($con, "SELECT * FROM question ORDER BY RAND() LIMIT 3");
+
+// $questions = [];
+// while($row = mysqli_fetch_assoc($result)) {
+//   $questions[] = $row;
+//   var_dump($row);
+// }
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +29,34 @@
     <script src="assets/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" href="css/font.css" />
     <link rel="stylesheet" href="css/color.css" />
+    <script>
+      const questions = [
+<?php while($row = mysqli_fetch_assoc($result)) :?>
+        {
+          id: <?= $row['id_question'] ?>,
+          question: `<?= $row['question'] ?>`,
+          choices: [
+            {
+              id: "a",
+              content: `<?= $row['answer_a'] ?>`,
+            },
+            {
+              id: "b",
+              content: `<?= $row['answer_b'] ?>`,
+            },
+            {
+              id: "c",
+              content: `<?= $row['answer_c'] ?>`,
+            },
+            {
+              id: "d",
+              content: `<?= $row['answer_d'] ?>`,
+            },
+          ],
+        },
+<?php endwhile; ?>
+      ];
+    </script>
     <style>
       label {
         cursor: pointer;

@@ -14,6 +14,7 @@ if (isset($_POST['login'])) {
     if ($row > 0) {
         session_start();
         $_SESSION['username'] = $select['username'];
+        $_SESSION['id'] = $select['id_profile'];
         echo "<script>alert('Anda berhasil login');window.location.href='dashboard.php'</script>";
     } else {
         echo "<script>alert('Terjadi kesalahan saat anda login');window.location.href='login.php'</script>";
