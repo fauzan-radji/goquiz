@@ -106,7 +106,8 @@ while($row = mysqli_fetch_assoc($result)) {
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="">
+      <form action="prosesedit.php" method="POST" autocomplete="off">
+        <input type="hidden" value="<?= $userId ?>" name="userId">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="editProfileModalLabel">Edit Profil</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -116,6 +117,7 @@ while($row = mysqli_fetch_assoc($result)) {
             <label for="username" class="form-label">Username</label>
             <input
               type="text"
+              name="username"
               class="form-control"
               id="username"
               value="<?= $username ?>"
@@ -125,6 +127,7 @@ while($row = mysqli_fetch_assoc($result)) {
             <label for="nama" class="form-label">Nama Lengkap</label>
             <input
               type="text"
+              name="nama"
               class="form-control"
               id="nama"
               value="<?= $nama ?>"
@@ -138,6 +141,7 @@ while($row = mysqli_fetch_assoc($result)) {
             <label for="passwordRetype" class="form-label">Konfirmasi Kata Sandi</label>
             <input
               type="passwordRetype"
+              name="password"
               class="form-control"
               id="passwordRetype"
             />
@@ -145,20 +149,20 @@ while($row = mysqli_fetch_assoc($result)) {
           <div class="mb-3">
             <p class="form-label">Foto Profil</p>
             <div class="d-flex justify-content-center">
-              <input type="radio" name="pict" id="asd" style="display: none;" checked>
+              <input type="radio" name="profil" id="asd" style="display: none;" checked>
               <label for="asd"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/asd.svg"></label>
-              <input type="radio" name="pict" id="jkl" style="display: none;">
+              <input type="radio" name="profil" id="jkl" style="display: none;">
               <label for="jkl"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/jkl.svg"></label>
-              <input type="radio" name="pict" id="ghj" style="display: none;">
+              <input type="radio" name="profil" id="ghj" style="display: none;">
               <label for="ghj"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/ghj.svg"></label>
-              <input type="radio" name="pict" id="klm" style="display: none;">
+              <input type="radio" name="profil" id="klm" style="display: none;">
               <label for="klm"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-          <button type="submit" class="btn primary">Simpan</button>
+          <button type="submit" class="btn primary" name="edit">Simpan</button>
         </div>
       </form>
     </div>
