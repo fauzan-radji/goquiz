@@ -87,17 +87,17 @@ while($row = mysqli_fetch_assoc($result)) {
 
     <div class="container">
       <div class="row mt-3 mt-md-5 justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
           <div class="card">
             <div class="card-body">
-              <canvas id="myChart" width="400" height="400"></canvas>
+              <canvas id="chart" width="3" height="1"></canvas>
             </div>
           </div>
         </div>
       </div>
       <div class="row mt-3 mt-md-5 justify-content-center">
         <div class="col-md-4 col-8">
-          <a href="lesson.html" class="btn primary w-100 fs-5 p-2">Main</a>
+          <a href="lesson.php" class="btn primary w-100 fs-5 p-2">Main</a>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@ while($row = mysqli_fetch_assoc($result)) {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <div class="mb-3">
+          <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input
               type="text"
@@ -167,12 +167,11 @@ while($row = mysqli_fetch_assoc($result)) {
 
     <script>
       const history = <?= json_encode($history) ?>;
-      console.log(history);
-      const ctx = document.getElementById("myChart").getContext("2d");
+      const ctx = document.getElementById("chart").getContext("2d");
       const borderColor = getComputedStyle(document.body).getPropertyValue(
         "--dark-primary"
       );
-      const myChart = new Chart(ctx, {
+      const chart = new Chart(ctx, {
         type: "line",
         data: {
           labels: history.map((e,i) => i + 1),

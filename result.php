@@ -3,8 +3,11 @@
 session_start();
 
 include('koneksi.php');
+$isLoggedIn = isset($_SESSION['id']);
 $userId = $_SESSION['id'];
 $answers = json_decode($_POST['answer'], true);
+$finishTime = $_POST['finish-time'];
+
 $correctAnswerCount = 0;
 $answerCount = count($answers);
 foreach ($answers as $answer) {
@@ -19,14 +22,30 @@ foreach ($answers as $answer) {
 $percentage = $correctAnswerCount / $answerCount * 100;
 $score = $correctAnswerCount * 10;
 
-$kyu = mysqli_query($con, "SELECT kyu FROM profile WHERE id_profile = $userId");
-$kyu = mysqli_fetch_assoc($kyu)['kyu'];
-var_dump($kyu);
+$exp = mysqli_query($con, "SELECT exp FROM profile WHERE id_profile = $userId");
+$exp = intval(mysqli_fetch_assoc($exp)['exp']);
+
+$historyCount = mysqli_fetch_assoc(mysqli_query($con, "SELECT COUNT(*) AS jumlah_baris FROM history WHERE finish_time='$finishTime'"))['jumlah_baris'];
+if(intval($historyCount) <= 0) {
+  // push new history
+  mysqli_query($con, "INSERT INTO history (id_user, point, finish_time) VALUES ($userId, $score, '$finishTime')");
+
+  // update user's exp
+  $exp += $score;
+  mysqli_query($con, "UPDATE profile SET exp = $exp WHERE id_profile = $userId");
+}
+
+$user = mysqli_query($con, "SELECT nama FROM profile WHERE id_profile = $userId");
+$user = mysqli_fetch_assoc($user);
+$name = $user['nama'];
 
 
-?>
-
-<!DOCTYPE html>
+$result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
+$history = [];
+while($row = mysqli_fetch_assoc($result)) {
+  $history[] = $row;
+}
+?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -35,24 +54,28 @@ var_dump($kyu);
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <script src="assets/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" href="css/color.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <title>Hasil</title>
   </head>
   <body>
     <div class="container py-5">
       <div class="row justify-content-center">
-        <div
-          class="col-md-8 d-flex align-items-center flex-column flex-md-row gap-5"
-        >
+        <div class="col-md-8 d-flex align-items-center flex-column flex-md-row gap-3">
           <img
             src="img/dani.png"
             class="rounded-circle"
             style="width: 150px; height: 150px; object-fit: cover"
           />
-          <h2>Dhani Ardianto Syahdila</h2>
+          <h2 class="mx-3"><?= $name ?></h2>
         </div>
       </div>
 
-      <div class="row justify-content-center mt-md-5 mt-3">
+      <!-- <div class="row justify-content-center mt-md-5 mt-3">
         <div class="col-md-8 col-10">
           <div class="progress">
             <div
@@ -85,34 +108,96 @@ var_dump($kyu);
             </div>
           </div>
         </div>
+      </div> -->
+      <div class="row mt-md-5 mt-3 justify-content-center gap-3">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-body">
+              <canvas id="resultChart" width="1" height="1"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex flex-column gap-3">
+          <div class="card">
+            <div class="card-body">
+              <canvas id="historyChart" width="2" height="1"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title text-center text-success"><?= $exp ?> exp</h3>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="container fixed-bottom mb-md-5 mb-3">
+    <div class="container mb-md-5 mb-3">
       <div class="row justify-content-center">
         <div class="col-md-2 col-12 mb-2">
-          <a class="btn btn-outline-primary w-100 fs-5 p-2" href="lesson.php">
+          <a class="btn <?= $isLoggedIn ? 'primary' : 'btn-outline-primary' ?> w-100 fs-5 p-2" href="lesson.php">
             MAIN LAGI
           </a>
         </div>
+        <?php if(!$isLoggedIn) : ?>
         <div class="col-md-2 col-12 mb-2">
           <a class="btn primary w-100 fs-5 p-2" href="login.php"> LOGIN </a>
         </div>
+        <?php endif; ?>
       </div>
     </div>
 
     <script>
-      const progressBar = document.getElementById("progress-bar");
-      // update progress bar
-      const percentage = `<?= number_format($percentage, 2, '.', ""); ?>%`
-      progressBar.textContent = percentage;
-      setTimeout(() => {
-        progressBar.style.width = percentage;
-      }, 10);
+      const resultCtx = document.getElementById('resultChart').getContext('2d');
 
-      const correctCount = document.getElementById('correctCount');
-      correctCount.textContent = `<?= $correctAnswerCount ?>`;
-      const wrongCount = document.getElementById('wrongCount');
-      wrongCount.textContent = `<?= $answerCount - $correctAnswerCount ?>`;
+      const myChart = new Chart(resultCtx, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            'Benar',
+            'Salah',
+          ],
+          datasets: [{
+            label: 'My First Dataset',
+            data: [<?= $correctAnswerCount ?>, <?= $answerCount - $correctAnswerCount ?>],
+            backgroundColor: [
+              'rgb(54, 162, 235)',
+              'rgb(255, 99, 132)',
+            ],
+            hoverOffset: 8
+          }]
+        }
+      });
+
+      
+    </script>
+    <script>
+      const history = <?= json_encode($history) ?>;
+      const historyCtx = document.getElementById("historyChart").getContext("2d");
+      const borderColor = getComputedStyle(document.body).getPropertyValue(
+        "--dark-primary"
+      );
+      const chart = new Chart(historyCtx, {
+        type: "line",
+        data: {
+          labels: history.map((e,i) => i + 1),
+          datasets: [
+            {
+              label: "Riwayat Poin",
+              data: history.map(e => e.point),
+              fill: true,
+              borderColor: borderColor,
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
     </script>
   </body>
 </html>
