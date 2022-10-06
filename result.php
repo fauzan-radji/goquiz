@@ -35,10 +35,10 @@ if(intval($historyCount) <= 0) {
   mysqli_query($con, "UPDATE profile SET exp = $exp WHERE id_profile = $userId");
 }
 
-$user = mysqli_query($con, "SELECT nama FROM profile WHERE id_profile = $userId");
+$user = mysqli_query($con, "SELECT nama, profile FROM profile WHERE id_profile = $userId");
 $user = mysqli_fetch_assoc($user);
 $name = $user['nama'];
-
+$profil = $user['profile'];
 
 $result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
 $history = [];
@@ -67,7 +67,7 @@ while($row = mysqli_fetch_assoc($result)) {
       <div class="row justify-content-center">
         <div class="col-md-8 d-flex align-items-center flex-column flex-md-row gap-3">
           <img
-            src="img/dani.png"
+            src="img/profile-pict/<?= $profil ?>.svg"
             class="rounded-circle"
             style="width: 150px; height: 150px; object-fit: cover"
           />

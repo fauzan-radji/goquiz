@@ -7,14 +7,25 @@ if(!isset($_SESSION['username'])) {
   die;
 }
 
+// update profile
+if(isset($_POST['edit'])) {
+  $userId = $_POST['userId'];
+  $username = $_POST['username'];
+  $nama = $_POST['nama'];
+  $profil = $_POST['profil'];
 
-$username = $_SESSION['username'];
-$sql = mysqli_query($con,"SELECT * FROM profile WHERE username='$username'");
+  mysqli_query($con, "UPDATE profile SET nama = '$nama', username = '$username', profile = '$profil' WHERE id_profile = $userId");
+}
+
+$id = $_SESSION['id'];
+$sql = mysqli_query($con,"SELECT * FROM profile WHERE id_profile = $id");
 $select = mysqli_fetch_assoc($sql);
 
 $userId = $select['id_profile'];
+$username = $select['username'];
 $nama = $select['nama'];
 $exp = $select['exp'];
+$profil = $select['profile'];
 
 $result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
 
@@ -67,7 +78,7 @@ while($row = mysqli_fetch_assoc($result)) {
             data-bs-toggle="dropdown"
           >
             <img
-              src="img/dani.png"
+              src="img/profile-pict/<?= $profil ?>.svg"
               alt="Logo"
               width="30"
               height="24"
@@ -81,7 +92,7 @@ while($row = mysqli_fetch_assoc($result)) {
             <li><a class="dropdown-item text-danger" href="logout.php">Keluar</a></li>
           </ul>
         </div>
-        <span class="exp"><?= $exp ?> kyu</span>
+        <span class="exp"><?= $exp ?> exp</span>
       </div>
     </nav>
 
@@ -106,7 +117,7 @@ while($row = mysqli_fetch_assoc($result)) {
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form action="prosesedit.php" method="POST" autocomplete="off">
+      <form action="" method="POST" autocomplete="off">
         <input type="hidden" value="<?= $userId ?>" name="userId">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="editProfileModalLabel">Edit Profil</h1>
@@ -134,29 +145,16 @@ while($row = mysqli_fetch_assoc($result)) {
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Kata Sandi</label>
-            <input type="password" class="form-control" id="password" />
-          </div>
-          <div class="mb-3">
-            <label for="passwordRetype" class="form-label">Konfirmasi Kata Sandi</label>
-            <input
-              type="passwordRetype"
-              name="password"
-              class="form-control"
-              id="passwordRetype"
-            />
-          </div>
-          <div class="mb-3">
             <p class="form-label">Foto Profil</p>
             <div class="d-flex justify-content-center">
-              <input type="radio" name="profil" id="asd" style="display: none;" checked>
+              <input type="radio" name="profil" id="asd" value="asd" style="display: none;" <?= ($profil === 'asd') ? 'checked' : ''; ?>>
               <label for="asd"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/asd.svg"></label>
-              <input type="radio" name="profil" id="jkl" style="display: none;">
+              <input type="radio" name="profil" id="jkl" value="jkl" style="display: none;" <?= ($profil === 'jkl') ? 'checked' : ''; ?>>
               <label for="jkl"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/jkl.svg"></label>
-              <input type="radio" name="profil" id="ghj" style="display: none;">
+              <input type="radio" name="profil" id="ghj" value="ghj" style="display: none;" <?= ($profil === 'ghj') ? 'checked' : ''; ?>>
               <label for="ghj"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/ghj.svg"></label>
-              <input type="radio" name="profil" id="klm" style="display: none;">
-              <label for="klm"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
+              <input type="radio" name="profil" id="qwe" value="qwe" style="display: none;" <?= ($profil === 'qwe') ? 'checked' : ''; ?>>
+              <label for="qwe"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
             </div>
           </div>
         </div>
