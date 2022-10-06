@@ -88,6 +88,11 @@ function sendAnswer(answerjson) {
   answerArea.name = "answer";
   answerArea.value = answerjson;
   form.appendChild(answerArea);
+  const finishTime = document.createElement("input");
+  finishTime.type = "number";
+  finishTime.name = "finish-time";
+  finishTime.value = Date.now();
+  form.appendChild(finishTime);
 
   document.body.appendChild(form);
 
