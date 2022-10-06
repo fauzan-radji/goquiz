@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
         session_start();
         $_SESSION['username'] = $select['username'];
         $_SESSION['id'] = $select['id_profile'];
-        echo "<script>alert('Anda berhasil login');window.location.href='dashboard.php'</script>";
+        header('Location: dashboard.php');
     } else {
         echo "<script>alert('Terjadi kesalahan saat anda login');window.location.href='login.php'</script>";
     }

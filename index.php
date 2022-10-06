@@ -1,6 +1,6 @@
 <?php
 session_start();
-$isLoggedIn = isset($_SESSION['username']);
+$isLoggedIn = isset($_SESSION['id']);
 ?><!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,14 +32,15 @@ $isLoggedIn = isset($_SESSION['username']);
           <h1 class="px-md-0 px-4">
             Ayo belajar bahasa Gorontalo dengan gratis di sini
           </h1>
+          <?php if($isLoggedIn) : ?>
           <a
             href="lesson.php"
             style="width: 300px"
-            class="fs-5 btn <?= $isLoggedIn ? '' : 'btn-outline-' ?>primary"
+            class="fs-5 btn primary"
           >
             Mulai
           </a>
-          <?php if(!$isLoggedIn) : ?>
+          <?php else : ?>
           <a href="login.php" style="width: 300px" class="fs-5 btn primary">
             Login
           </a>

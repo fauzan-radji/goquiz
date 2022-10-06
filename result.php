@@ -133,16 +133,14 @@ while($row = mysqli_fetch_assoc($result)) {
     </div>
     <div class="container mb-md-5 mb-3">
       <div class="row justify-content-center">
-        <div class="col-md-2 col-12 mb-2">
-          <a class="btn <?= $isLoggedIn ? 'primary' : 'btn-outline-primary' ?> w-100 fs-5 p-2" href="lesson.php">
-            MAIN LAGI
+        <div class="col-md-4 col-12 mb-2">
+          <a class="btn primary w-100 fs-5 p-2" href="lesson.php">
+            Main lagi
           </a>
         </div>
-        <?php if(!$isLoggedIn) : ?>
-        <div class="col-md-2 col-12 mb-2">
-          <a class="btn primary w-100 fs-5 p-2" href="login.php"> LOGIN </a>
+        <div class="col-md-4 col-12 mb-2">
+          <a class="btn btn-outline-primary w-100 fs-5 p-2" href="dashboard.php">Kembali ke dashboard</a>
         </div>
-        <?php endif; ?>
       </div>
     </div>
 

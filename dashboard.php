@@ -14,7 +14,7 @@ $select = mysqli_fetch_assoc($sql);
 
 $userId = $select['id_profile'];
 $nama = $select['nama'];
-$kyu = $select['kyu'];
+$exp = $select['exp'];
 
 $result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
 
@@ -81,7 +81,7 @@ while($row = mysqli_fetch_assoc($result)) {
             <li><a class="dropdown-item text-danger" href="logout.php">Keluar</a></li>
           </ul>
         </div>
-        <span class="exp"><?= $kyu ?> kyu</span>
+        <span class="exp"><?= $exp ?> kyu</span>
       </div>
     </nav>
 
