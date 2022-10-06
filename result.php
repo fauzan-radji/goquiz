@@ -2,7 +2,7 @@
 
 session_start();
 
-include('koneksi.php');
+include('koneksi.php');5
 $userId = $_SESSION['id'];
 $answers = json_decode($_POST['answer'], true);
 $correctAnswerCount = 0;
