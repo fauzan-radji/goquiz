@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Okt 2022 pada 14.46
--- Versi server: 10.4.22-MariaDB
--- Versi PHP: 8.1.2
+-- Generation Time: Oct 06, 2022 at 03:57 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `history`
+-- Table structure for table `history`
 --
 
 CREATE TABLE `history` (
@@ -35,7 +35,7 @@ CREATE TABLE `history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `history`
+-- Dumping data for table `history`
 --
 
 INSERT INTO `history` (`id`, `id_user`, `point`, `finish_time`) VALUES
@@ -60,12 +60,22 @@ INSERT INTO `history` (`id`, `id_user`, `point`, `finish_time`) VALUES
 (19, 2, 20, '1664891032826'),
 (20, 2, 20, '1664891479343'),
 (21, 2, 20, '1665059457223'),
-(22, 2, 10, '1665059940910');
+(22, 2, 10, '1665059940910'),
+(23, 2, 20, '1665060305286'),
+(24, 2, 30, '1665061643773'),
+(25, 2, 30, '1665061675297'),
+(26, 2, 30, '1665061850125'),
+(27, 2, 30, '1665061901391'),
+(28, 2, 30, '1665062261518'),
+(29, 2, 20, '1665062543423'),
+(30, 2, 10, '1665062659778'),
+(31, 2, 0, '1665063824896'),
+(32, 2, 30, '1665064034536');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile`
+-- Table structure for table `profile`
 --
 
 CREATE TABLE `profile` (
@@ -80,16 +90,16 @@ CREATE TABLE `profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `profile`
+-- Dumping data for table `profile`
 --
 
 INSERT INTO `profile` (`id_profile`, `nama`, `jenis_kelamin`, `role`, `exp`, `username`, `password`, `profile`) VALUES
-(2, 'fauzan', '', '', 220, 'fauzan', '12345', '');
+(2, 'Fauzan Radji', '', '', 450, 'agung', '12345', 'jkl');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `question`
+-- Table structure for table `question`
 --
 
 CREATE TABLE `question` (
@@ -103,7 +113,7 @@ CREATE TABLE `question` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `question`
+-- Dumping data for table `question`
 --
 
 INSERT INTO `question` (`id_question`, `question`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `is_correct`) VALUES
@@ -119,41 +129,41 @@ INSERT INTO `question` (`id_question`, `question`, `answer_a`, `answer_b`, `answ
 --
 
 --
--- Indeks untuk tabel `history`
+-- Indexes for table `history`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `profile`
+-- Indexes for table `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`id_profile`);
 
 --
--- Indeks untuk tabel `question`
+-- Indexes for table `question`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`id_question`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `history`
+-- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT untuk tabel `profile`
+-- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
   MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `question`
+-- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
   MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;

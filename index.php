@@ -29,7 +29,7 @@ $isLoggedIn = isset($_SESSION['id']);
         <div
           class="col-md-6 d-flex flex-column justify-content-center align-items-center gap-md-3 gap-2"
         >
-          <h1 class="px-md-0 px-4">
+          <h1 class="px-md-0 px-4 text-center">
             Ayo belajar bahasa Gorontalo dengan gratis di sini
           </h1>
           <?php if($isLoggedIn) : ?>
@@ -42,24 +42,11 @@ $isLoggedIn = isset($_SESSION['id']);
           </a>
           <?php else : ?>
           <a href="login.php" style="width: 300px" class="fs-5 btn primary">
-            Login
+            Masuk
           </a>
           <?php endif; ?>
         </div>
       </div>
     </div>
-    <!-- <header class="mt-5 text-center">
-      <img class="w-25" src="img/typo.svg" alt="GOQuiz" />
-    </header>
-
-    <main>
-      <img src="img/logo.svg" />
-
-      <div>
-        <h1>Ayo belajar bahasa Gorontalo<br />dengan gratis di sini</h1>
-        <a href="lesson.php" class="button button-1">Mulai</a>
-        <a href="login.php" class="button">Login</a>
-      </div>
-    </main> -->
   </body>
 </html>
