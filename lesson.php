@@ -9,22 +9,8 @@ if(!isset($_SESSION['username'])) {
 include('koneksi.php');
 $result = mysqli_query($con, "SELECT * FROM question ORDER BY RAND() LIMIT 3");
 
-// $questions = [];
-// while($row = mysqli_fetch_assoc($result)) {
-//   $questions[] = $row;
-//   var_dump($row);
-// }
-
-
+include('header.php');
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <script src="assets/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" href="css/font.css" />
@@ -89,51 +75,43 @@ $result = mysqli_query($con, "SELECT * FROM question ORDER BY RAND() LIMIT 3");
 
       <div class="row justify-content-center mt-5">
         <div class="col-md-8">
-          <p class="fw-bold fs-2" id="question">Mana yang merupakan "pria"?</p>
+          <p class="fw-bold fs-2" id="question">Pertanyaan</p>
         </div>
       </div>
 
-      <div class="row mt-md-5 justify-content-center">
+      <div class="row justify-content-center">
         <div class="col-md-4 col-6 mb-3">
           <input type="radio" name="choice" value="a" id="a" />
           <label class="card text-center" for="a">
-            <div
-              class="card-body d-flex justify-content-center align-items-center"
-            >
-              <p class="card-text" id="choiceTextA">Some quick.</p>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <p class="card-text" id="choiceTextA">A</p>
             </div>
           </label>
         </div>
         <div class="col-md-4 col-6 mb-3">
           <input type="radio" name="choice" value="b" id="b" />
           <label class="card text-center" for="b">
-            <div
-              class="card-body d-flex justify-content-center align-items-center"
-            >
-              <p class="card-text" id="choiceTextB">Some quick.</p>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <p class="card-text" id="choiceTextB">B</p>
             </div>
           </label>
         </div>
       </div>
 
-      <div class="row mt-md-5 justify-content-center">
+      <div class="row justify-content-center">
         <div class="col-md-4 col-6 mb-3">
           <input type="radio" name="choice" value="c" id="c" />
           <label class="card text-center" for="c">
-            <div
-              class="card-body d-flex justify-content-center align-items-center"
-            >
-              <p class="card-text" id="choiceTextC">Some quick.</p>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <p class="card-text" id="choiceTextC">C</p>
             </div>
           </label>
         </div>
         <div class="col-md-4 col-6 mb-3">
           <input type="radio" name="choice" value="d" id="d" />
           <label class="card text-center" for="d">
-            <div
-              class="card-body d-flex justify-content-center align-items-center"
-            >
-              <p class="card-text" id="choiceTextD">Some quick.</p>
+            <div class="card-body d-flex justify-content-center align-items-center">
+              <p class="card-text" id="choiceTextD">D</p>
             </div>
           </label>
         </div>

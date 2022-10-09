@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2022 at 03:57 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.11
+-- Waktu pembuatan: 09 Okt 2022 pada 00.28
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,9 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `history`
+-- Struktur dari tabel `history`
 --
 
+DROP TABLE IF EXISTS `history`;
 CREATE TABLE `history` (
   `id` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
@@ -35,73 +36,76 @@ CREATE TABLE `history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `history`
+-- Dumping data untuk tabel `history`
 --
 
 INSERT INTO `history` (`id`, `id_user`, `point`, `finish_time`) VALUES
-(1, 2, 8, ''),
-(2, 2, 5, ''),
-(3, 2, 10, ''),
-(4, 2, 5, ''),
-(5, 2, 3, ''),
-(6, 2, 10, '1664855484922'),
-(7, 2, 10, '1664855585430'),
-(8, 2, 10, '1664855769787'),
-(9, 2, 0, '1664883644414'),
-(10, 2, 10, '1664885312000'),
-(11, 2, 20, '1664885560501'),
-(12, 2, 20, '1664887424434'),
-(13, 2, 10, '1664887473434'),
-(14, 2, 30, '1664887504796'),
-(15, 2, 0, '1664887574552'),
-(16, 2, 20, '1664888325221'),
-(17, 2, 20, '1664889278953'),
-(18, 2, 0, '1664890190315'),
-(19, 2, 20, '1664891032826'),
-(20, 2, 20, '1664891479343'),
-(21, 2, 20, '1665059457223'),
-(22, 2, 10, '1665059940910'),
-(23, 2, 20, '1665060305286'),
-(24, 2, 30, '1665061643773'),
-(25, 2, 30, '1665061675297'),
-(26, 2, 30, '1665061850125'),
-(27, 2, 30, '1665061901391'),
-(28, 2, 30, '1665062261518'),
-(29, 2, 20, '1665062543423'),
-(30, 2, 10, '1665062659778'),
-(31, 2, 0, '1665063824896'),
-(32, 2, 30, '1665064034536');
+(1, 2, 20, '1664855484922'),
+(2, 2, 30, '1664855585430'),
+(3, 2, 0, '1664855769787'),
+(4, 2, 20, '1664883644414'),
+(5, 2, 30, '1664885312000'),
+(6, 2, 10, '1664885560501'),
+(7, 2, 10, '1664887424434'),
+(8, 2, 10, '1664887473434'),
+(9, 2, 0, '1664887504796'),
+(10, 2, 10, '1664887574552'),
+(11, 2, 20, '1664888325221'),
+(12, 2, 20, '1664889278953'),
+(13, 2, 10, '1664890190315'),
+(14, 2, 30, '1664891032826'),
+(15, 2, 0, '1664891479343'),
+(16, 2, 20, '1665059457223'),
+(17, 2, 20, '1665059940910'),
+(18, 2, 0, '1665258321330'),
+(19, 2, 20, '1665258448703'),
+(20, 2, 20, '1665259293355'),
+(26, 2, 20, '1665261031210'),
+(27, 2, 20, '1665261400836'),
+(28, 2, 30, '1665261579063'),
+(29, 4, 30, '1665262710247'),
+(30, 4, 30, '1665262720530'),
+(31, 4, 20, '1665262738070'),
+(32, 4, 20, '1665262750036'),
+(33, 4, 0, '1665262757852'),
+(34, 4, 20, '1665263019585'),
+(35, 4, 20, '1665266072495'),
+(36, 4, 30, '1665266259187'),
+(37, 4, 20, '1665266462070'),
+(38, 4, 20, '1665267429225'),
+(39, 4, 30, '1665267932245'),
+(40, 4, 20, '1665268000001');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile`
+-- Struktur dari tabel `profile`
 --
 
+DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
   `id_profile` int(11) NOT NULL,
   `nama` varchar(40) NOT NULL,
-  `jenis_kelamin` varchar(10) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `exp` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` char(10) NOT NULL,
   `profile` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `profile`
+-- Dumping data untuk tabel `profile`
 --
 
-INSERT INTO `profile` (`id_profile`, `nama`, `jenis_kelamin`, `role`, `exp`, `username`, `password`, `profile`) VALUES
-(2, 'Fauzan Radji', '', '', 450, 'agung', '12345', 'jkl');
+INSERT INTO `profile` (`id_profile`, `nama`, `username`, `password`, `profile`) VALUES
+(2, 'Fauzan Radji', 'fauzan', '12345', 'vince-ruz.png'),
+(4, 'Agung Saputra', 'agung', '12345', 'jkl.svg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question`
+-- Struktur dari tabel `question`
 --
 
+DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question` (
   `id_question` int(11) NOT NULL,
   `question` varchar(300) NOT NULL,
@@ -113,7 +117,7 @@ CREATE TABLE `question` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `question`
+-- Dumping data untuk tabel `question`
 --
 
 INSERT INTO `question` (`id_question`, `question`, `answer_a`, `answer_b`, `answer_c`, `answer_d`, `is_correct`) VALUES
@@ -129,41 +133,41 @@ INSERT INTO `question` (`id_question`, `question`, `answer_a`, `answer_b`, `answ
 --
 
 --
--- Indexes for table `history`
+-- Indeks untuk tabel `history`
 --
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `profile`
+-- Indeks untuk tabel `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`id_profile`);
 
 --
--- Indexes for table `question`
+-- Indeks untuk tabel `question`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`id_question`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `history`
+-- AUTO_INCREMENT untuk tabel `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT for table `profile`
+-- AUTO_INCREMENT untuk tabel `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `question`
+-- AUTO_INCREMENT untuk tabel `question`
 --
 ALTER TABLE `question`
   MODIFY `id_question` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;

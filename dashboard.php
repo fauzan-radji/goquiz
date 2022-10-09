@@ -1,62 +1,53 @@
 <?php
-include('koneksi.php');
 session_start();
 // Jika belum login
-if(!isset($_SESSION['username'])) {
+if(!isset($_SESSION['id'])) {
   echo "<script>alert('Anda tidak berwenang mengakses halaman ini!');window.location.href='login.php'</script>";
   die;
 }
 
+include('utils.php');
+
 // update profile
 if(isset($_POST['edit'])) {
-  $userId = $_POST['userId'];
+  $id = $_POST['userId'];
   $username = $_POST['username'];
   $nama = $_POST['nama'];
   $profil = $_POST['profil'];
 
-  mysqli_query($con, "UPDATE profile SET nama = '$nama', username = '$username', profile = '$profil' WHERE id_profile = $userId");
+  updateProfile($id, $username, $nama, $profil);
 }
 
 $id = $_SESSION['id'];
-$sql = mysqli_query($con,"SELECT * FROM profile WHERE id_profile = $id");
-$select = mysqli_fetch_assoc($sql);
 
-$userId = $select['id_profile'];
-$username = $select['username'];
-$nama = $select['nama'];
-$exp = $select['exp'];
-$profil = $select['profile'];
+$profile = getProfile($id);
 
-$result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
+$userId = $profile['id'];
+$username = $profile['username'];
+$nama = $profile['nama'];
+$profil = $profile['profile'];
+$exp = getExp($userId);
 
-$history = [];
-while($row = mysqli_fetch_assoc($result)) {
-  $history[] = $row;
-}
+$history = getHistory($id, 20);
 
+$profilePicts = getProfilePicts();
+
+include('header.php');
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/font.css" />
     <link rel="stylesheet" href="css/color.css" />
     <link rel="stylesheet" href="css/navbar.css" />
     <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <script src="js/chart.min.js"></script>
 
     <style>
       input[type="radio"]:checked + label > .profile-pict {
         opacity: 1;
+      }
+
+      .label-wrapper {
+        grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
       }
 
       label:has(.profile-pict) {
@@ -65,7 +56,10 @@ while($row = mysqli_fetch_assoc($result)) {
 
       .profile-pict {
         opacity: 0.2;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
       }
+
     </style>
     <title>Dasbor</title>
   </head>
@@ -78,11 +72,9 @@ while($row = mysqli_fetch_assoc($result)) {
             data-bs-toggle="dropdown"
           >
             <img
-              src="img/profile-pict/<?= $profil ?>.svg"
-              alt="Logo"
-              width="30"
-              height="24"
-              class="d-inline-block align-text-top"
+              src="img/profile-pict/<?= $profil ?>"
+              alt="Foto Profil"
+              class="d-inline-block align-text-top rounded-circle"
             />
             <?= $username ?>
           </button>
@@ -101,7 +93,7 @@ while($row = mysqli_fetch_assoc($result)) {
         <div class="col-md-8">
           <div class="card">
             <div class="card-body">
-              <canvas id="chart" width="3" height="1"></canvas>
+              <canvas id="chart" width="2" height="1"></canvas>
             </div>
           </div>
         </div>
@@ -146,15 +138,11 @@ while($row = mysqli_fetch_assoc($result)) {
           </div>
           <div class="mb-3">
             <p class="form-label">Foto Profil</p>
-            <div class="d-flex justify-content-center">
-              <input type="radio" name="profil" id="asd" value="asd" style="display: none;" <?= ($profil === 'asd') ? 'checked' : ''; ?>>
-              <label for="asd"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/asd.svg"></label>
-              <input type="radio" name="profil" id="jkl" value="jkl" style="display: none;" <?= ($profil === 'jkl') ? 'checked' : ''; ?>>
-              <label for="jkl"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/jkl.svg"></label>
-              <input type="radio" name="profil" id="ghj" value="ghj" style="display: none;" <?= ($profil === 'ghj') ? 'checked' : ''; ?>>
-              <label for="ghj"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/ghj.svg"></label>
-              <input type="radio" name="profil" id="qwe" value="qwe" style="display: none;" <?= ($profil === 'qwe') ? 'checked' : ''; ?>>
-              <label for="qwe"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/qwe.svg"></label>
+            <div class="label-wrapper d-grid gap-1">
+              <?php foreach ($profilePicts as $pict) : ?>
+              <input type="radio" name="profil" id="<?= $pict ?>" value="<?= $pict ?>" style="display: none;" <?= ($profil === $pict) ? 'checked' : ''; ?>>
+              <label for="<?= $pict ?>"><img class="w-100 rounded-circle profile-pict" src="img/profile-pict/<?= $pict ?>"></label>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>
@@ -169,32 +157,8 @@ while($row = mysqli_fetch_assoc($result)) {
 
     <script>
       const history = <?= json_encode($history) ?>;
-      const ctx = document.getElementById("chart").getContext("2d");
-      const borderColor = getComputedStyle(document.body).getPropertyValue(
-        "--dark-primary"
-      );
-      const chart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: history.map((e,i) => i + 1),
-          datasets: [
-            {
-              label: "Riwayat Poin",
-              data: history.map(e => e.point),
-              fill: true,
-              borderColor: borderColor,
-              tension: 0.1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
+      const historyCtx = document.getElementById("chart").getContext("2d");
     </script>
+    <script src="js/history.js"></script>
   </body>
 </html>

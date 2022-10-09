@@ -2,64 +2,38 @@
 
 session_start();
 
-include('koneksi.php');
+include('utils.php');
+
 $isLoggedIn = isset($_SESSION['id']);
 $userId = $_SESSION['id'];
 $answers = json_decode($_POST['answer'], true);
 $finishTime = $_POST['finish-time'];
 
-$correctAnswerCount = 0;
-$answerCount = count($answers);
-foreach ($answers as $answer) {
-  $id = $answer['questionId'];
-  $answer = $answer['answer'];
-  $correctAnswer = mysqli_query($con, "SELECT is_correct FROM question WHERE id_question = $id");
-  $correctAnswer = mysqli_fetch_assoc($correctAnswer)['is_correct'];
+$answersCount = count($answers);
+$correctAnswersCount = getCorrectAnswersCount($answers);
 
-  if ($correctAnswer === $answer) $correctAnswerCount++;
-}
+$percentage = $correctAnswersCount / $answersCount * 100;
+$score = $correctAnswersCount * 10;
 
-$percentage = $correctAnswerCount / $answerCount * 100;
-$score = $correctAnswerCount * 10;
-
-$exp = mysqli_query($con, "SELECT exp FROM profile WHERE id_profile = $userId");
-$exp = intval(mysqli_fetch_assoc($exp)['exp']);
-
-$historyCount = mysqli_fetch_assoc(mysqli_query($con, "SELECT COUNT(*) AS jumlah_baris FROM history WHERE finish_time='$finishTime'"))['jumlah_baris'];
-if(intval($historyCount) <= 0) {
+$historyCount = getHistoryCount($finishTime);
+if($historyCount <= 0) {
   // push new history
-  mysqli_query($con, "INSERT INTO history (id_user, point, finish_time) VALUES ($userId, $score, '$finishTime')");
-
-  // update user's exp
-  $exp += $score;
-  mysqli_query($con, "UPDATE profile SET exp = $exp WHERE id_profile = $userId");
+  pushHistory($userId, $score, $finishTime);
 }
 
-$user = mysqli_query($con, "SELECT nama, profile FROM profile WHERE id_profile = $userId");
-$user = mysqli_fetch_assoc($user);
+$exp = getExp($userId);
+$user = getProfile($userId);
 $name = $user['nama'];
 $profil = $user['profile'];
 
-$result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId");
-$history = [];
-while($row = mysqli_fetch_assoc($result)) {
-  $history[] = $row;
-}
-?><!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+$history = getHistory($userId, 20);
+
+include('header.php');
+?>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <script src="assets/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" href="css/color.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
-      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <script src="js/chart.min.js"></script>
     <title>Hasil</title>
   </head>
   <body>
@@ -67,7 +41,7 @@ while($row = mysqli_fetch_assoc($result)) {
       <div class="row justify-content-center">
         <div class="col-md-8 d-flex align-items-center flex-column flex-md-row gap-3">
           <img
-            src="img/profile-pict/<?= $profil ?>.svg"
+            src="img/profile-pict/<?= $profil ?>"
             class="rounded-circle"
             style="width: 150px; height: 150px; object-fit: cover"
           />
@@ -75,40 +49,6 @@ while($row = mysqli_fetch_assoc($result)) {
         </div>
       </div>
 
-      <!-- <div class="row justify-content-center mt-md-5 mt-3">
-        <div class="col-md-8 col-10">
-          <div class="progress">
-            <div
-              id="progress-bar"
-              class="progress-bar primary"
-              role="progressbar"
-              aria-label="Example with label"
-              style="width: 0"
-            >
-              0%
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mt-md-5 mt-3 justify-content-center">
-        <div class="col-md-3 col-6 mb-3">
-          <div class="card border-success text-center">
-            <div class="card-body">
-              <h5 class="card-title fs-1" id="correctCount">4</h5>
-              <p class="card-text">Benar</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-6 mb-3">
-          <div class="card border-danger text-center">
-            <div class="card-body">
-              <h5 class="card-title fs-1" id="wrongCount">10</h5>
-              <p class="card-text">Salah</p>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="row mt-md-5 mt-3 justify-content-center gap-3">
         <div class="col-md-4">
           <div class="card">
@@ -117,7 +57,7 @@ while($row = mysqli_fetch_assoc($result)) {
             </div>
           </div>
         </div>
-        <div class="col-md-4 d-flex flex-column gap-3">
+        <div class="col-md-6 d-flex flex-column gap-3">
           <div class="card">
             <div class="card-body">
               <canvas id="historyChart" width="2" height="1"></canvas>
@@ -155,8 +95,8 @@ while($row = mysqli_fetch_assoc($result)) {
             'Salah',
           ],
           datasets: [{
-            label: 'My First Dataset',
-            data: [<?= $correctAnswerCount ?>, <?= $answerCount - $correctAnswerCount ?>],
+            label: 'Hasil Jawaban',
+            data: [<?= $correctAnswersCount ?>, <?= $answersCount - $correctAnswersCount ?>],
             backgroundColor: [
               'rgb(54, 162, 235)',
               'rgb(255, 99, 132)',
@@ -167,10 +107,11 @@ while($row = mysqli_fetch_assoc($result)) {
       });
 
       
-    </script>
-    <script>
       const history = <?= json_encode($history) ?>;
       const historyCtx = document.getElementById("historyChart").getContext("2d");
+    </script>
+    <script src="js/history.js"></script>
+    <!-- <script>
       const borderColor = getComputedStyle(document.body).getPropertyValue(
         "--dark-primary"
       );
@@ -196,6 +137,6 @@ while($row = mysqli_fetch_assoc($result)) {
           },
         },
       });
-    </script>
+    </script> -->
   </body>
 </html>

@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<?php
+include('header.php');
+?>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <script src="assets/js/bootstrap.min.js" defer></script>
     <link rel="stylesheet" href="css/font.css" />
@@ -49,11 +46,16 @@
               </form>
 
               <div>
-                <p class="mb-0">
+                <p class="mb-3">
                   Belum punya akun?
-                  <a href="register.php" class="text-white-50 fw-bold"
-                    >Daftar</a
-                  >
+                  <a href="register.php" class="text-white-50 fw-bold">
+                    Daftar
+                  </a>
+                </p>
+                <p>
+                  <a href="index.php" class="text-white-50 fw-bold">
+                    Kembali ke halaman utama
+                  </a>
                 </p>
               </div>
             </div>
