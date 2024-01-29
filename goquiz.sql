@@ -96,8 +96,9 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`id_profile`, `nama`, `username`, `password`, `profile`) VALUES
-(2, 'Fauzan Radji', 'fauzan', '12345', 'vince-ruz.png'),
-(4, 'Agung Saputra', 'agung', '12345', 'jkl.svg');
+(1, 'Admin', 'admin', '12345', 'default.svg'),
+(2, 'Fauzan Radji', 'fauzan', '12345', 'ghj.svg'),
+(3, 'Agung Saputra', 'agung', '12345', 'jkl.svg');
 
 -- --------------------------------------------------------
 
