@@ -84,21 +84,22 @@ INSERT INTO `history` (`id`, `id_user`, `point`, `finish_time`) VALUES
 
 DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
-  `id_profile` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `nama` varchar(40) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` char(10) NOT NULL,
-  `profile` varchar(20) NOT NULL
+  `profile` varchar(20) NOT NULL default 'default.svg',
+  `role` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `profile`
 --
 
-INSERT INTO `profile` (`id_profile`, `nama`, `username`, `password`, `profile`) VALUES
-(1, 'Admin', 'admin', '12345', 'default.svg'),
-(2, 'Fauzan Radji', 'fauzan', '12345', 'ghj.svg'),
-(3, 'Agung Saputra', 'agung', '12345', 'jkl.svg');
+INSERT INTO `profile` (`id`, `nama`, `username`, `password`, `profile`, `role`) VALUES
+(1, 'Admin', 'admin', '12345', 'default.svg', 'admin'),
+(2, 'Fauzan Radji', 'fauzan', '12345', 'ghj.svg', 'user'),
+(3, 'Agung Saputra', 'agung', '12345', 'jkl.svg', 'user');
 
 -- --------------------------------------------------------
 
@@ -143,7 +144,7 @@ ALTER TABLE `history`
 -- Indeks untuk tabel `profile`
 --
 ALTER TABLE `profile`
-  ADD PRIMARY KEY (`id_profile`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeks untuk tabel `question`
@@ -165,7 +166,7 @@ ALTER TABLE `history`
 -- AUTO_INCREMENT untuk tabel `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id_profile` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `question`
