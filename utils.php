@@ -1,60 +1,61 @@
 <?php
 include('koneksi.php');
 
-function updateProfile($id, $username, $nama, $profil) {
+function updateProfile($id, $username, $nama, $profil)
+{
   global $con;
 
-  mysqli_query($con, "UPDATE profile SET nama = '$nama', username = '$username', profile = '$profil' WHERE id_profile = $id");
+  mysqli_query($con, "UPDATE profile SET nama = '$nama', username = '$username', profile = '$profil' WHERE id = $id");
 }
 
-function getHistory($userId, $historyCount = 20) {
+function getHistory($userId, $historyCount = 20)
+{
   global $con;
 
   $result = mysqli_query($con, "SELECT * FROM history WHERE id_user = $userId ORDER BY id DESC LIMIT $historyCount");
 
   $history = [];
-  while($row = mysqli_fetch_assoc($result)) {
+  while ($row = mysqli_fetch_assoc($result)) {
     $history[] = $row;
   }
 
   return $history;
 }
 
-function getProfile($id) {
+function getProfile($id)
+{
   global $con;
 
-  $result = mysqli_query($con,"SELECT * FROM profile WHERE id_profile = $id");
-  $result = mysqli_fetch_assoc($result);
+  $result = mysqli_query($con, "SELECT * FROM profile WHERE id = $id");
 
-  return [
-    "id" => $result['id_profile'],
-    "username" => $result['username'],
-    "nama" => $result['nama'],
-    "profile" => $result['profile'] ?: 'default.svg'
-  ];
+  return mysqli_fetch_assoc($result);
 }
 
-function getProfilePicts() {
+function getProfilePicts()
+{
   $pictDir = 'img/profile-pict/';
   $allFiles = scandir($pictDir);
   $strip = array_diff($allFiles, array('.', '..'));
   return array_values($strip);
 }
 
-function pushHistory($userId, $point, $finishTime) {
+function pushHistory($userId, $point, $finishTime)
+{
   global $con;
 
   mysqli_query($con, "INSERT INTO history (id_user, point, finish_time) VALUES ($userId, $point, '$finishTime')");
 }
 
-function getExp($id) {
+function getExp($id)
+{
   global $con;
-  // $exp = mysqli_query($con, "SELECT exp FROM profile WHERE id_profile = $id");
+  // $exp = mysqli_query($con, "SELECT exp FROM profile WHERE id = $id");
   $exp = mysqli_query($con, "SELECT SUM(point) AS exp FROM history WHERE id_user = $id");
   return intval(mysqli_fetch_assoc($exp)['exp']);
 }
 
-function getCorrectAnswersCount($answers) {
+function getCorrectAnswersCount($answers)
+{
   global $con;
 
   $correctAnswersCount = 0;
@@ -70,10 +71,16 @@ function getCorrectAnswersCount($answers) {
   return $correctAnswersCount;
 }
 
-function getHistoryCount($finishTime) {
+function getHistoryCount($finishTime)
+{
   global $con;
 
   $historyCount = mysqli_fetch_assoc(mysqli_query($con, "SELECT COUNT(*) AS jumlah_baris FROM history WHERE finish_time='$finishTime'"))['jumlah_baris'];
 
   return intval($historyCount);
 }
+
+// enum of roles
+const ADMIN = 'admin';
+const USER = 'user';
+const ROLES = [ADMIN, USER];

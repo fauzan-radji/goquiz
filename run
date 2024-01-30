@@ -1,0 +1,9 @@
+<?php
+$command = $argv[1];
+
+switch ($command) {
+  case 'serve':
+    exec('php -S localhost:8000', $output);
+    echo implode('\n', $output);
+    break;
+}

@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source width="80" media="(prefers-color-scheme: dark)" srcset="img/logo.svg" />
-    <source width="80" media="(prefers-color-scheme: light)" srcset="img/logo-light.svg" />
+    <source width="80" media="(prefers-color-scheme: dark)" srcset="img/logo-light.svg" />
+    <source width="80" media="(prefers-color-scheme: light)" srcset="img/logo.svg" />
     <img alt="GOQuiz" src="img/logo-light.svg" />
   </picture>
 </p>
@@ -57,7 +57,7 @@ $ mysql -u <username> -p goquiz < goquiz.sql
 4. Run the application using the following command:
 
 ```bash
-$ php -S localhost:8000
+$ php run serve
 ```
 
 5. Open your browser and go to `localhost:8000`.
