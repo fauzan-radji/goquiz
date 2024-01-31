@@ -46,6 +46,7 @@ DB_HOST=localhost
 DB_USER=root
 DB_PASS=
 DB_NAME=goquiz
+APP_URL=http://localhost/goquiz/
 ```
 
 4. Import the `goquiz.sql` file into the `goquiz` database.
@@ -54,37 +55,33 @@ DB_NAME=goquiz
 $ mysql -u <username> -p goquiz < goquiz.sql
 ```
 
-4. Run the application using the following command:
+4. Move the `goquiz` folder to your local web server directory. For example, if you are using XAMPP, move the `goquiz` folder to the `htdocs` folder. If you are using different directory name other than `goquiz`, make sure to change the `APP_URL` field in the `.env` file to your own directory name.
 
-```bash
-$ php run serve
-```
-
-5. Open your browser and go to `localhost:8000`.
+5. Open your browser and go to `localhost/goquiz` or your own directory name.
 
 ## Screenshots
 
-![Home Screen](img/screenshots/home.png)
+![Home Screen](public/img/screenshots/home.png)
 
 Image 1: Home Screen
 
-![Login Screen](img/screenshots/login.png)
+![Login Screen](public/img/screenshots/login.png)
 
 Image 2: Login Screen
 
-![Register Screen](img/screenshots/register.png)
+![Register Screen](public/img/screenshots/register.png)
 
 Image 3: Register Screen
 
-![Dashboard Screen](img/screenshots/dashboard.png)
+![Dashboard Screen](public/img/screenshots/dashboard.png)
 
 Image 4: Dashboard Screen
 
-![Quiz Screen](img/screenshots/quiz.png)
+![Quiz Screen](public/img/screenshots/quiz.png)
 
 Image 5: Quiz Screen
 
-![Result Screen](img/screenshots/result.png)
+![Result Screen](public/img/screenshots/result.png)
 
 Image 6: Result Screen
 

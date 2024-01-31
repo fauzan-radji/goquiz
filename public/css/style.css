@@ -1,0 +1,128 @@
+/* RESET */
+body,
+body * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* MAIN */
+body {
+  padding: 1em;
+}
+
+header {
+  text-align: center;
+  font-weight: bold;
+  margin: 50px;
+}
+
+header img {
+  /* margin-bottom: 1em; */
+  width: 80%;
+  max-width: 300px;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4em;
+  height: 65vh;
+  padding: 0 30px;
+}
+
+main img {
+  width: 50vw;
+  height: 50vw;
+  max-width: 300px;
+  max-height: 300px;
+
+  object-fit: contain;
+  /* border-radius: 50%; */
+  /* background-color: #ae9353; */
+  margin: 0 80px;
+}
+
+div {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0 80px;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+button,
+a.button {
+  outline: none;
+  border: 2px solid #ae9353;
+  text-decoration: none;
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+  padding: 1em;
+  border-radius: 0.5em;
+  width: 300px;
+  text-transform: uppercase;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before,
+a.button::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+button:hover::before,
+a.button:hover::before {
+  background-color: #0004;
+}
+
+a.button.button-1 {
+  border: none;
+  margin-top: 3em;
+  background-color: #ae9353;
+  color: #fff;
+}
+
+@media screen and (orientation: portrait) {
+  header {
+    margin-bottom: -10px;
+    font-size: 2.5em;
+  }
+
+  main {
+    flex-direction: column;
+    gap: 2em;
+  }
+
+  div {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 1.1em;
+  }
+
+  button {
+    width: 200px;
+  }
+
+  .button-1 {
+    margin-top: 1em;
+  }
+}
