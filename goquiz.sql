@@ -79,27 +79,27 @@ INSERT INTO `history` (`id`, `id_user`, `point`, `finish_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profile`
+-- Struktur dari tabel `users`
 --
 
-DROP TABLE IF EXISTS `profile`;
-CREATE TABLE `profile` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nama` varchar(40) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` char(10) NOT NULL,
+  `password` char(60) NOT NULL,
   `profile` varchar(20) NOT NULL default 'default.svg',
   `role` enum('admin','user') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `profile`
+-- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `profile` (`id`, `nama`, `username`, `password`, `profile`, `role`) VALUES
-(1, 'Admin', 'admin', '12345', 'default.svg', 'admin'),
-(2, 'Fauzan Radji', 'fauzan', '12345', 'ghj.svg', 'user'),
-(3, 'Agung Saputra', 'agung', '12345', 'jkl.svg', 'user');
+INSERT INTO `users` (`id`, `nama`, `username`, `password`, `profile`, `role`) VALUES
+(1, 'Admin', 'admin', '$2y$10$sK7HqrpCwff7yL/AtetYu.IO/8wMhMnkt.OqudTDtEmds7CUHhihO', 'default.svg', 'admin'),
+(2, 'Fauzan Radji', 'fauzan', '$2y$10$sK7HqrpCwff7yL/AtetYu.IO/8wMhMnkt.OqudTDtEmds7CUHhihO', 'ghj.svg', 'user'),
+(3, 'Agung Saputra', 'agung', '$2y$10$sK7HqrpCwff7yL/AtetYu.IO/8wMhMnkt.OqudTDtEmds7CUHhihO', 'jkl.svg', 'user');
 
 -- --------------------------------------------------------
 
@@ -141,9 +141,9 @@ ALTER TABLE `history`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `profile`
+-- Indeks untuk tabel `users`
 --
-ALTER TABLE `profile`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -163,9 +163,9 @@ ALTER TABLE `history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT untuk tabel `profile`
+-- AUTO_INCREMENT untuk tabel `users`
 --
-ALTER TABLE `profile`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --

@@ -7,7 +7,7 @@ use function Core\route;
 
 <?php function main()
 { ?>
-  <form action="proseslogin.php" method="post">
+  <form action="<?= route('authenticate') ?>" method="post">
     <div class="mb-md-5 mb-3 mt-md-2">
       <h2 class="fw-bold mb-4 text-uppercase">Masuk</h2>
 
@@ -43,5 +43,5 @@ use function Core\route;
 <?php } ?>
 
 <?php extend('auth', [
-  'title' => 'Daftar'
+  'title' => 'Masuk'
 ]); ?>

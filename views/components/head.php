@@ -1,5 +1,7 @@
 <?php
 
+use Core\Session;
+
 use function Core\asset;
 
 ?>
@@ -15,4 +17,16 @@ use function Core\asset;
   <link rel="stylesheet" href="<?= asset('css/font.css') ?>" />
   <link rel="stylesheet" href="<?= asset('css/background.css') ?>" />
   <link rel="stylesheet" href="<?= asset('css/color.css') ?>" />
+
+  <?php if (Session::has_error()) : ?>
+    <script>
+      alert('<?= Session::get_error() ?>');
+    </script>
+  <?php endif ?>
+
+  <?php if (Session::has_success()) : ?>
+    <script>
+      alert('<?= Session::get_success() ?>');
+    </script>
+  <?php endif ?>
 </head>

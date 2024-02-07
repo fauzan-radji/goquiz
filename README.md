@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source width="80" media="(prefers-color-scheme: dark)" srcset="img/logo-light.svg" />
-    <source width="80" media="(prefers-color-scheme: light)" srcset="img/logo.svg" />
-    <img alt="GOQuiz" src="img/logo-light.svg" />
+    <source width="80" media="(prefers-color-scheme: dark)" srcset="public/img/logo-light.svg" />
+    <source width="80" media="(prefers-color-scheme: light)" srcset="public/img/logo.svg" />
+    <img alt="GOQuiz" src="public/img/logo-light.svg" />
   </picture>
 </p>
 
@@ -84,6 +84,14 @@ Image 5: Quiz Screen
 ![Result Screen](public/img/screenshots/result.png)
 
 Image 6: Result Screen
+
+## Users
+
+| Name          | Username | Password | Role  |
+| ------------- | -------- | -------- | ----- |
+| Admin         | admin    | 12345678 | admin |
+| Fauzan Radji  | fauzan   | 12345678 | user  |
+| Agung Saputra | agung    | 12345678 | user  |
 
 ## Issues
 

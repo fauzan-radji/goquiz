@@ -68,34 +68,6 @@ function component($component, $data = [])
   require ROOT . "views/components/$component.php";
 }
 
-function get_error()
-{
-  if (array_key_exists('error', $_SESSION)) {
-    $error = $_SESSION['error'];
-    unset($_SESSION['error']);
-    return $error;
-  } else return null;
-}
-
-function set_error($error)
-{
-  $_SESSION['error'] = $error;
-}
-
-function get_success()
-{
-  if (array_key_exists('success', $_SESSION)) {
-    $success = $_SESSION['success'];
-    unset($_SESSION['success']);
-    return $success;
-  } else return null;
-}
-
-function set_success($success)
-{
-  $_SESSION['success'] = $success;
-}
-
 function routeIs($guess)
 {
   global $path;

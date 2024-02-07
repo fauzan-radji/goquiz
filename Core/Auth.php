@@ -2,30 +2,33 @@
 
 namespace Core;
 
+use Model\User;
+
 class Auth
 {
   public static function login($username, $password)
   {
-    $result = Database::query("SELECT * FROM tbl_user WHERE username = '$username'");
-    $data = Database::fetch($result)[0];
+    $tableName = User::get_table_name();
+    $result = Database::query("SELECT * FROM $tableName WHERE username = '$username'");
+    $user = Database::fetch($result)[0];
 
     if (Database::num_rows($result) < 1) {
       return [
         'msg' => 'Username salah',
-        'success' => false
+        'user' => null
       ];
     }
 
-    if (!password_verify($password, $data['password'])) {
+    if (!password_verify($password, $user['password'])) {
       return [
         'msg' => 'Password salah',
-        'success' => false
+        'user' => null
       ];
     }
 
     return [
       'msg' => 'Login sukses',
-      'success' => true
+      'user' => $user
     ];
   }
 
@@ -36,13 +39,9 @@ class Auth
 
   public static function user()
   {
-    if (!Session::has('username')) return null;
-
-    $username = Session::get('username');
-    $result = Database::query("SELECT * FROM tbl_user WHERE username = '$username'");
-    $user = Database::fetch($result)[0];
-
-    return $user;
+    if (!Session::has('id')) return null;
+    $id = Session::get('id');
+    return User::find($id);
   }
 
   public static function is($level)

@@ -14,6 +14,7 @@ class AuthController extends Controller
 {
   public static function index()
   {
+    //
   }
 
   public static function login()
@@ -36,20 +37,21 @@ class AuthController extends Controller
     $password = $_POST['password'];
 
     $result = Auth::login($username, $password);
-    if (!$result['success']) {
-      set_error($result['msg']);
+    $user = $result['user'];
+    if ($user === null) {
+      Session::set_error($result['msg']);
       return redirect('/login');
     }
 
-    Session::set('username', $username);
-    set_success($result['msg']);
+    Session::set('id', $user['id']);
+    Session::set_success($result['msg']);
     return redirect('/dashboard');
   }
 
   public static function logout()
   {
     Auth::logout();
-    set_success('Berhasil logout');
+    Session::set_success('Berhasil logout');
     return redirect('/login');
   }
 }
